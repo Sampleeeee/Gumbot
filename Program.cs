@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using Newtonsoft.Json;
 
 namespace Gumbot
 {
@@ -14,15 +16,22 @@ namespace Gumbot
 
         public async Task MainAsync()
         {
+            var config = JsonConvert.DeserializeObject<Config>( File.ReadAllText( "config.json" ) );
+                
             var discord = new DiscordClient( new DiscordConfiguration
             {
-                Token = "ODQ4NzIxNTU5NzQwNjEyNjE4.YLQvjA.OMHuuKU6cR3ZGv3h0EQKkyU-jd4",
+                Token = config.Token,
                 TokenType = TokenType.Bot,
                 Intents = DiscordIntents.AllUnprivileged
             } );
 
             await discord.ConnectAsync();
             await Task.Delay( -1 );
+        }
+
+        public struct Config
+        {
+            public string Token { get; set; }
         }
     }
 }
