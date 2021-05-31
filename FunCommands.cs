@@ -20,6 +20,7 @@ namespace Gumbot
                         await ctx.Member.RevokeRoleAsync( role );
 
                 await ctx.Member.GrantRoleAsync( ctx.Guild.GetRole( Program.Config.Colors[color] ) );
+                await ctx.RespondAsync( $"You have been given the color {color}!" );
             }
             else
             {
