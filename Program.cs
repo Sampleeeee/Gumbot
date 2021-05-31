@@ -28,6 +28,14 @@ namespace Gumbot
                 Intents = DiscordIntents.AllUnprivileged
             } );
 
+            var commands = discord.UseCommandsNext( new CommandsNextConfiguration
+            {
+                StringPrefixes = new[] { "%" }
+            } );
+
+            commands.RegisterCommands<FunCommands>();
+            commands.RegisterCommands<StaffCommands>();
+
             await discord.ConnectAsync();
             await Task.Delay( -1 );
         }
