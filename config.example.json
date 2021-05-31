@@ -1,3 +1,6 @@
 ﻿{
-  "Token": "Your token here"
+  "Token": "Your token here",
+  "MutedRole": "Role Id",
+  "StaffLogChannel": "Staff Log Channel",
+  "Colors": {}
 }

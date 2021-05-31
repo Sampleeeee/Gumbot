@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using DSharpPlus;
@@ -9,6 +10,8 @@ namespace Gumbot
 {
     class Program
     {
+        public static Config Config { get; private set; }
+        
         private static void Main( string[] args )
         {
             new Program().MainAsync().GetAwaiter().GetResult();
@@ -16,11 +19,11 @@ namespace Gumbot
 
         public async Task MainAsync()
         {
-            var config = JsonConvert.DeserializeObject<Config>( File.ReadAllText( "config.json" ) );
+            Config = JsonConvert.DeserializeObject<Config>( await File.ReadAllTextAsync( "config.json" ) );
                 
             var discord = new DiscordClient( new DiscordConfiguration
             {
-                Token = config.Token,
+                Token = Config.Token,
                 TokenType = TokenType.Bot,
                 Intents = DiscordIntents.AllUnprivileged
             } );
@@ -28,10 +31,13 @@ namespace Gumbot
             await discord.ConnectAsync();
             await Task.Delay( -1 );
         }
+    }
 
-        public struct Config
-        {
-            public string Token { get; set; }
-        }
+    public struct Config
+    {
+        public string Token { get; set; }
+        public ulong MutedRole { get; set; }
+        public ulong StaffLogChannel { get; set; }
+        public Dictionary<string, ulong> Colors { get; set; }
     }
 }
