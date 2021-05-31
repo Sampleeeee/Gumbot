@@ -25,9 +25,12 @@ namespace Gumbot
         [Command( "unmute" )]
         [Description( "Opossum is no longer drunk 0.o" )]
         [RequirePermissions( Permissions.MuteMembers )]
-        private async Task UnmuteCommand( CommandContext ctx, DiscordMember member = null )
+        private async Task UnmuteCommand( CommandContext ctx, DiscordMember member )
         {
-            
+            await ctx.TriggerTypingAsync();
+
+            await member.RevokeRoleAsync( ctx.Guild.GetRole( Program.Config.MutedRole ) );
+            await ctx.RespondAsync( $"{member.Mention} has been unmuted!" );
         }
     }
 }
